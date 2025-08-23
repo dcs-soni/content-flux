@@ -1,0 +1,10 @@
+.env
+.env.local
+__pycache__/
+*.pyc
+*.pyo
+generated_content/
+*.log
+.venv/
+venv/
+.portia/
