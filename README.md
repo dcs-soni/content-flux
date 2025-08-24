@@ -1,4 +1,4 @@
-# Content Flux
+# Content Flux 🤖
 
 ## **AI-powered Content Creation using PortiaAI**
 
