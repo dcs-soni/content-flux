@@ -1,0 +1,3 @@
+python-dotenv>=1.1.1
+portia-sdk-python[all]==0.7.0
+streamlit>=1.28.0
