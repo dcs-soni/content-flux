@@ -8,7 +8,7 @@ validation, and workflow orchestration functionality.
 import json
 import os
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import Dict, Any
 from dotenv import load_dotenv
 
 from portia import (
@@ -46,7 +46,6 @@ class ContentCreatorAgent:
                 print("Setting up Notion MCP!!")
                 
                 # Method 1 - OPENAPI_MCP_HEADERS
-                import json
                 headers_dict = {
                     "Authorization": f"Bearer {self.app_config.notion_api_key}",
                     "Notion-Version": self.app_config.notion_api_version
@@ -94,8 +93,6 @@ class ContentCreatorAgent:
                     print("Debug info:")
                     print(f"   - API Key format: {'Valid' if self.app_config.notion_api_key.startswith('ntn_') else 'Invalid - should start with ntn_'}")
                     print(f"   - Notion Version: {self.app_config.notion_api_version}")
-                    # if self.app_config.notion_database_id:
-                    #     print(f"   - Database ID: {self.app_config.notion_database_id[:20]}...")
                     print("Notion integration disabled & content will be saved locally only")
                     self.notion_available = False
         else:
