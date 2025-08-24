@@ -10,7 +10,7 @@ from src.agent.content_agent import ContentCreatorAgent
 
 # Page config
 st.set_page_config(
-    page_title="Content Flux - AI Content Creator",
+    page_title="Content Flux 🤖 AI Content Creator",
     page_icon="📝",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -347,6 +347,7 @@ def main():
 # Create .env file with:
 PORTIA_API_KEY=your_portia_key_here
 GOOGLE_API_KEY=your_google_key_here
+TAVILY_API_KEY=your_tavily_key_here
 NOTION_API_KEY=your_notion_key_here 
 NOTION_DATABASE_ID=your_database_id
         """)
