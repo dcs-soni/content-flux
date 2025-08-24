@@ -10,6 +10,7 @@ if not exist .env (
     echo Example .env content:
     echo PORTIA_API_KEY=your_portia_key_here
     echo GOOGLE_API_KEY=your_google_key_here
+    echo TAVILY_API_KEY=your_tavily_key_here
     echo NOTION_API_KEY=your_notion_key_here
     echo NOTION_DATABASE_ID=your_database_id_here
     pause

@@ -55,8 +55,9 @@ def check_environment_variables():
     required_vars = {
         'PORTIA_API_KEY': 'Portia API Key (required)',
         'GOOGLE_API_KEY': 'Google API Key (required)',
-        'NOTION_API_KEY': 'Notion API Key (optional)',
-        'NOTION_DATABASE_ID': 'Notion Database ID (optional)'
+        'TAVILY_API_KEY': 'TAVILY API Key (required)',
+        'NOTION_API_KEY': 'Notion API Key (optional but recomended)',
+        'NOTION_DATABASE_ID': 'Notion Database ID (optional but recomended)'
     }
     
     missing_required = []
