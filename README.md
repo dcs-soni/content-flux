@@ -6,8 +6,8 @@
 Content Flux is an intelligent content creation agent that automatically researches trending topics, generates multi-format content, and saves it to a Notion Database. It leverages PortiaAI's capabilities to create comprehensive content including long-form articles, social media posts, and SEO-optimized metadata.
 
 <p align="center">
-  <a href="https://youtu.be/WQeThBQeKhY" target="_blank">
-    <img src="https://img.youtube.com/vi/WQeThBQeKhY/maxresdefault.jpg" alt="Watch the video" width="600">
+  <a href="https://youtu.be/KX4OGaM5HQU" target="_blank">
+    <img src="https://img.youtube.com/vi/KX4OGaM5HQU/maxresdefault.jpg" alt="Watch the video" width="600">
   </a>
 </p>
 
@@ -80,9 +80,9 @@ The Streamlit web interface will be available at: `http://localhost:8501`
 
 2. **Google API Key** (Required):
 
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Enable the Custom Search API
-   - Create credentials and get your API key
+   - Go to [Google AI for Developers](https://console.cloud.google.com/)
+   - Sign in using your google email.
+   - Get an API key.
 
 3. **Notion Integration** (Optional, butt recomended):
    - Create a Notion integration at [Notion Developers](https://developers.notion.com/)
