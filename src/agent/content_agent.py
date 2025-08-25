@@ -7,6 +7,7 @@ validation, and workflow orchestration functionality.
 
 import json
 import os
+import random
 from datetime import datetime
 from typing import Dict, Any
 from dotenv import load_dotenv
@@ -225,20 +226,34 @@ class ContentCreatorAgent:
                 if not trending_topics or (isinstance(trending_topics, str) and len(trending_topics.strip()) < 10):
                     raise RuntimeError("No trending topics found from research - research may have failed")
                 
-                # Use the first topic from research
+                # Use a random topic from research
                 if isinstance(trending_topics, list) and trending_topics:
-                    topic = str(trending_topics[0]).strip()
+                    # Clean and filter the list first
+                    clean_topics = [str(topic).strip() for topic in trending_topics if str(topic).strip()]
+                    if clean_topics:
+                        topic = random.choice(clean_topics)
+                    else:
+                        topic = str(trending_topics[0]).strip()
                 else:
-                    # Parse from string format
+                    # Parse from string format and collect all topics
                     lines = str(trending_topics).split('\n')
-                    topic = None
+                    topic_candidates = []
+                    
+                    # Extract all numbered topics (1., 2., 3., etc.)
                     for line in lines:
                         line = line.strip()
-                        if line and (line.startswith('1.') or line.startswith('1)')):
-                            topic = line.split('.', 1)[-1].split(')', 1)[-1].strip()
-                            break
-                    if not topic:
-                        # Fallback - use first non-empty line
+                        if line and any(line.startswith(f'{i}.') or line.startswith(f'{i})') for i in range(1, 11)):
+                            # Extract topic text after number
+                            clean_topic = line.split('.', 1)[-1].split(')', 1)[-1].strip()
+                            if clean_topic and len(clean_topic) > 5:
+                                topic_candidates.append(clean_topic)
+                    
+                    if topic_candidates:
+                        topic = random.choice(topic_candidates)
+                        print(f"Found {len(topic_candidates)} topics, randomly selected one")
+                    else:
+                        # Fallback, use first non-empty line
+                        topic = None
                         for line in lines:
                             if line.strip() and len(line.strip()) > 5:
                                 topic = line.strip()
@@ -279,7 +294,7 @@ class ContentCreatorAgent:
                     
                     # Step 4: Save files locally
                     try:
-                        local_files = save_content_locally(content_data, topic, self.output_dir)
+                        local_files = save_content_locally(content_data, topic, self.output_dir, self.portia)
                         print(f"Local files saved to: {local_files}")
                     except Exception as e:
                         print(f"------XXXXXXX-----Local file save failed------XXXXXXX-----: {e}")
@@ -306,6 +321,28 @@ class ContentCreatorAgent:
                 raise RuntimeError("No content was successfully generated")
             
             print("\nContent Creator Agent workflow completed, YAYYYYY!!!!!!!!!")
+            
+            # Print Notion URL
+            for i, result in enumerate(results, 1):
+                notion_url = result.get('notion_url', '')
+                if notion_url and notion_url.startswith('Notion page created:'):
+            
+                    try:
+                        response_text = notion_url.replace('Notion page created: ', '')
+                        response_data = json.loads(response_text)
+                        if 'content' in response_data and response_data['content']:
+                            content_text = response_data['content'][0]['text']
+                            pages_data = json.loads(content_text)
+                            if 'pages' in pages_data and pages_data['pages']:
+                                page_url = pages_data['pages'][0]['url']
+                                print(f"Topic {i}: {result['topic']}")
+                                print(f"Notion URL 🔗: {page_url}")
+                    except:
+                        print(f"Topic {i}: {result['topic']} - Notion URL parsing failed")
+                elif notion_url and not notion_url.startswith(('Failed:', 'Skipped')):
+                    print(f"Topic {i}: {result['topic']}")
+                    print(f"Notion URL 🔗: {notion_url}")
+
             return {"results": results, "total_created": len(results)}
             
         except Exception as e:
