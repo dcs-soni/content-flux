@@ -1,7 +1,7 @@
 <h1 align="center">Content Flux 🤖</h1>
 <p align="center"><i>⚡ Automating content workflows with AI-powered agents ⚡</i></p>
 
-## **AI-powered Content Creation using PortiaAI**
+<h2 align="center">AI-powered Content Creation using PortiaAI</h2>
 
 Content Flux is an intelligent content creation agent that automatically researches trending topics, generates multi-format content, and saves it to a Notion Database. It leverages PortiaAI's capabilities to create comprehensive content including long-form articles, social media posts, and SEO-optimized metadata.
 
