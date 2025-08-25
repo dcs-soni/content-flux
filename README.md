@@ -22,6 +22,56 @@ Content Flux is an intelligent content creation agent that automatically researc
 - **Web Interface**: User-friendly Streamlit app for easy content management.
 - **Local Storage**: Saves all generated content locally in JSON and Markdown formats.
 
+## Technical Architecture
+
+### Portia AI Agent Framework
+
+Content Flux leverages **PortiaAI** as its core AI agent framework, providing advanced capabilities for autonomous content creation. The system demonstrates sophisticated AI agent orchestration with multi-tool integration and intelligent planning.
+
+#### AI Agent Capabilities & Impact
+
+**Autonomous Decision Making & Originality:**
+
+The Portia agent researches topics, studies trends, and changes its plan as needed. It uses PortiaAI’s tools to create more than just basic content, combining information from many sources. From a single word or idea, it can make different types of content that fit each platform’s rules.
+
+#### Tool Integration & Planning
+
+The Portia agent utilizes a sophisticated tool ecosystem:
+
+**Core Tools:**
+
+- **LLM Tool**: Primary reasoning and content generation engine.
+- **File Writer Tool**: Automated file creation and management for content storage.
+- **Notion MCP with notion_create_pages tool**: Direct database integration for seamless content publishing.
+- **Tavily Tool**: Advanced web search and research capabilities for trend discovery
+
+**Intelligent Tool Planning:**
+
+- **Sequential Planning**: Agent plans multi-step workflows **(research → analysis → content creation → publishing)**.
+- **Adaptive Execution**: Modifies plans based on tool results and intermediate findings
+- **Parallel Processing**: Executes multiple tools simultaneously when possible for efficiency
+- **Error Recovery**: Automatically handles tool failures and retries with fallback approaches.
+
+#### Agent Workflow Architecture
+
+```
+Research Phase → Analysis Phase → Creation Phase → Publishing Phase
+     ↓              ↓                 ↓                    ↓
+Tavily Tool    →  LLM Tool      →  LLM Tool      →     Notion MCP
+                    ↓                 ↓                File Writer
+              Planning Logic      Content Gen.
+```
+
+**Dynamic Planning Example:**
+
+1. Agent receives niche specification.
+2. Plans research strategy using Tavily.
+3. Analyzes trends and selects optimal topics.
+4. Plans content formats based on topic characteristics.
+5. Generates content using creative writing techniques.
+6. Plans publishing strategy (Notion + local storage).
+7. Executes publishing with error handling.
+
 ## Quick Start
 
 ### Prerequisites
