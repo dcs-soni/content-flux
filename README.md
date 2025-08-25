@@ -103,7 +103,7 @@ uv sync
 # Run the web app
 uv run streamlit run streamlit_app.py
 
-# Or run the CLI version (Preferred way)
+# Or run the CLI version
 uv run python main.py
 ```
 
