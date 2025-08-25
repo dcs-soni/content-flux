@@ -157,33 +157,37 @@ def create_notion_save_plan(content_data: Dict[str, Any], topic: str, notion_dat
     notion_create_tool = "portia:mcp:mcp.notion.com:notion_create_pages"
     
     if notion_database_id:
-        # Determine content type based on what we're creating (multi-format = blog_post)
-        content_type = "blog_post"  # Since we create comprehensive articles
+        # Determine content type based on what we're creating (mostly this will be multi-format = blog_post)
+        content_type = "blog_post" 
         
-        # Create page in database with properties using proper MCP format
-        # Clean content for JSON safety
+
         safe_content = full_content.replace('"', "'").replace('\n', '\\n').replace('\r', '')
         safe_title = title.replace('"', "'")
-        safe_keywords = ', '.join(keywords[:3]) if keywords else 'content, guide, trends'
+        # safe_keywords = ', '.join(keywords[:3]) if keywords else 'content, guide, trends'
         
         plan = (
             PlanBuilder(f"Save complete content to Notion database: {title}")
             .step(
-                task=f"""Create a page in the Notion database {notion_database_id} with the following structure:
+                task=f"""Use notion-create-pages tool to create a page with this exact structure:
 
-Parent: database_id = {notion_database_id}
+{{
+  "parent": {{
+    "database_id": "{notion_database_id}"
+  }},
+  "pages": [
+    {{
+      "properties": {{
+        "title": "{safe_title}",
+        "Content Type": "{content_type}",
+        "Status": "ready",
+        "Niche": "{niche_value}"
+      }},
+      "content": "{safe_content}"
+    }}
+  ]
+}}
 
-Page properties:
-- title: {safe_title}
-- Content Type: {content_type}
-- Status: ready
-- Keywords: {safe_keywords}
-- Niche: {niche_value}
-
-Page content (use full Notion markdown):
-{safe_content}
-
-Do NOT set Target Date property (causes validation errors). Use the exact property names as they exist in the database schema. Create the page with all the content - do not truncate anything.""",
+Make sure to populate ALL properties in the database correctly. Do NOT include Target Date, Performance Links, or Distributed At properties.""",
                 tool_id=notion_create_tool,
                 output="$database_page"
             )
