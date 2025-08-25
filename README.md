@@ -5,9 +5,11 @@
 
 Content Flux is an intelligent content creation agent that automatically researches trending topics, generates multi-format content, and saves it to a Notion Database. It leverages PortiaAI's capabilities to create comprehensive content including long-form articles, social media posts, and SEO-optimized metadata.
 
+<h4 align="center">Full Demo video ⬇️</h4>
+
 <p align="center">
-  <a href="https://youtu.be/KX4OGaM5HQU" target="_blank">
-    <img src="https://img.youtube.com/vi/KX4OGaM5HQU/maxresdefault.jpg" alt="Watch the video" width="600">
+  <a href="https://youtu.be/7wv6YasLo2o" target="_blank">
+    <img src="https://img.youtube.com/vi/7wv6YasLo2o/maxresdefault.jpg" alt="Watch the video" width="600">
   </a>
 </p>
 
