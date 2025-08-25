@@ -9,7 +9,7 @@ import json
 import os
 from datetime import datetime
 from typing import Dict, Any
-from src.plans.plan_builders import create_notion_save_plan
+from src.plans.plan_builders import create_notion_save_plan, create_file_save_plan
 
 
 def clean_unicode_in_dict(data: Dict[str, Any]) -> Dict[str, Any]:
@@ -84,9 +84,9 @@ def save_content_to_notion(portia, content_data: Dict[str, Any], topic: str, app
         return f"Notion storage failed: {str(e)}"
 
 
-def save_content_locally(content_data: Dict[str, Any], topic: str, output_dir: str) -> str:
-    """Save generated content to local files!!."""
-    print("Saving content files locally")
+def save_content_locally(content_data: Dict[str, Any], topic: str, output_dir: str, portia=None) -> str:
+    """Save generated content to local files using Portia File Writer tool first, if it fails then fallback to manual file adding."""
+    print("Now, Saving content files locally")
     
     # Create filename-safe topic name
     safe_topic = "".join(c for c in topic if c.isalnum() or c in (' ', '-', '_')).rstrip()
@@ -103,10 +103,41 @@ def save_content_locally(content_data: Dict[str, Any], topic: str, output_dir: s
     if len(filename) > 100:
         filename = f"content_{timestamp}"
     
-    # Always use manual saving for reliability
+    # Try Portia File Writer tool first
+    if portia is not None:
+        try:
+            print("Using Portia File Writer tool...")
+            return _save_files_with_portia(portia, content_data, filename, output_dir)
+        except Exception as e:
+            print(f"Portia File Writer failed: {str(e)}")
+            print("Falling back to manual file saving...")
+    
+    # Fallback to manual saving
     return _save_files_manually(content_data, filename, output_dir)
 
 
+def _save_files_with_portia(portia, content_data: Dict[str, Any], filename: str, output_dir: str) -> str:
+    """Save files using Portia File Writer tool."""
+    try:
+        print("-------Creating file writing plan with Portia---------")
+        
+        # Ensure output directory exists
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Create plan and get file list using plan builder
+        file_plan, files_created = create_file_save_plan(content_data, filename, output_dir)
+        
+        # Execute the plan
+        result = portia.run_plan(file_plan)
+        print(" --------------------------------------")
+        print(f"Portia File Writer saved {len(files_created)} files successfully")
+        return f"{output_dir}/{filename}"
+        
+    except Exception as e:
+        print(f"Portia File Writer error: {str(e)}")
+        raise e
+
+# Fallback to this if Portia File Writer fails
 def _save_files_manually(content_data: Dict[str, Any], filename: str, output_dir: str) -> str:
     """Manually save files when Portia file_writer_tool fails."""
     try:
