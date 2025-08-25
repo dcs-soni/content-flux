@@ -215,11 +215,11 @@ def display_content_results(results, output_formats):
             with col1:
                 if "Twitter Thread" in output_formats and content_data.get('twitter_thread'):
                     st.markdown("### 🐦 Twitter Thread")
-                    st.text_area("", content_data['twitter_thread'], height=150, key=f"twitter_{i}")
+                    st.text_area("Twitter thread", content_data['twitter_thread'], height=150, key=f"twitter_{i}")
                 
                 if "LinkedIn Post" in output_formats and content_data.get('linkedin_post'):
                     st.markdown("### 💼 LinkedIn Post")
-                    st.text_area("", content_data['linkedin_post'], height=150, key=f"linkedin_{i}")
+                    st.text_area("LinkedIn Post", content_data['linkedin_post'], height=150, key=f"linkedin_{i}")
             
             with col2:
                 if "Instagram Caption" in output_formats and content_data.get('instagram_caption'):
